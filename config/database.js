@@ -2,17 +2,6 @@ const mongoose = require('mongoose');
 
 require('dotenv').config();
 
-/**
- * -------------- DATABASE ----------------
- */
-
-/**
- * Connect to MongoDB Server using the connection string in the `.env` file.  To implement this, place the following
- * string into the `.env` file
- * 
- * DB_STRING=mongodb://<user>:<password>@localhost:27017/database_name
- */ 
-
 const conn = process.env.DB_STRING;
 
 const connection = mongoose.createConnection(conn, {
@@ -21,15 +10,32 @@ const connection = mongoose.createConnection(conn, {
 });
 
 // Creates simple schema for a User.  The hash and salt are derived from the user's given password when they register
-const UserSchema = new mongoose.Schema({
-    username: String,
-    hash: String,
-    salt: String,
-    admin: Boolean
+const userSchema = new mongoose.Schema({
+    username: {
+        type: String,
+        default: '',
+    },
+    email: {
+        type: String,
+        default: '',
+    },
+    hash: {
+        type: String,
+        default: '',
+    },
+    salt: {
+        type: String,
+        default: '',
+    },
+    isAdmin: {
+        type: Boolean,
+        default: true,
+    },
+
 });
 
 
-const User = connection.model('User', UserSchema);
+const User = connection.model('User', userSchema);
 
 // Expose the connection
 module.exports = connection;
