@@ -4,6 +4,7 @@ const session = require('express-session');
 var passport = require('passport');
 var crypto = require('crypto');
 var routes = require('./routes');
+var dbRoutes = require('./routes/dataRoutes');
 const connection = require('./config/database');
 
 // Package documentation - https://www.npmjs.com/package/connect-mongo
@@ -20,7 +21,7 @@ require('dotenv').config();
 var app = express();
 
 app.use(express.json());
-app.use(express.urlencoded({extended: true}));
+app.use(express.urlencoded({ extended: true }));
 
 
 /**
@@ -50,8 +51,6 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use((req, res, next) => {
-    console.log(req.session);
-    console.log(req.user);
     next();
 });
 
@@ -61,6 +60,7 @@ app.use((req, res, next) => {
 
 // Imports all of the routes from ./routes/index.js
 app.use(routes);
+app.use(dbRoutes);
 
 
 /**

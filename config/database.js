@@ -14,22 +14,22 @@ const userSchema = new mongoose.Schema({
     username: {
         type: String,
         default: '',
+        required: true,
     },
     email: {
         type: String,
         default: '',
+        required: true,
+        unique: true
     },
-    hash: {
+    password: {
         type: String,
         default: '',
-    },
-    salt: {
-        type: String,
-        default: '',
+        required: true
     },
     isAdmin: {
         type: Boolean,
-        default: true,
+        default: false,
     },
 
 });
