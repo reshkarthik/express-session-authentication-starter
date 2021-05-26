@@ -6,14 +6,14 @@ const validPassword = require('../lib/passwordUtils').validPassword;
 
 const verifyCallback = (username, password, done) => {
 
-    User.findOne({ username: username })
+    User.findOne({ $or: [{ username: username }, { email: username }] })
         .then((user) => {
 
             if (!user) { return done(null, false) }
-
-            const isValid = validPassword(password, user.hash);
+            const isValid = validPassword(password, user.password);
 
             if (isValid) {
+                console.log("I FOUND A MATCHING USERNAME")
                 return done(null, user);
             } else {
                 return done(null, false);
@@ -30,7 +30,7 @@ const strategy = new LocalStrategy(verifyCallback);
 passport.use(strategy);
 
 passport.serializeUser((user, done) => {
-    done(null, user.id);
+    done(null, user._id);
 });
 
 passport.deserializeUser((userId, done) => {

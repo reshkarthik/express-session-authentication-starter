@@ -26,9 +26,9 @@ router.get('/', isAuth, (req, res, next) => {
     res.send('You made it to the route.');
 });
 
-// router.get('/users', isAdmin, (req, res, next) => {
-//     res.send('You made it to the admin route.');
-// });
+router.get('/check', isAdmin, (req, res, next) => {
+    res.send('You made it to the admin route');
+});
 
 router.get('/users', (req, res, next) => {
     res.sendFile('users.html', { root: '/Users/reshmakarthik/Desktop/express-session-authentication-starter/' });
@@ -36,14 +36,6 @@ router.get('/users', (req, res, next) => {
 router.get('/logout', (req, res, next) => {
     req.logout();
     res.redirect('/login');
-});
-
-router.get('/login-success', (req, res, next) => {
-    res.send('<p>You successfully logged in. --> <a href="/">Go to protected route</a></p>');
-});
-
-router.get('/login-failure', (req, res, next) => {
-    res.send('You entered the wrong password.');
 });
 
 module.exports = router;
